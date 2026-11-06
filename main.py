@@ -26,11 +26,9 @@ def evaluate_rule_based(posts: List[str], labels: List[str]) -> float:
         if is_correct:
             correct += 1
 
-        # If you implement explain(), you can uncomment these lines:
-        # reason = analyzer.explain(text)
-        # print(f'"{text}" -> predicted={predicted_label}, true={true_label} ({reason})')
-
-        print(f'"{text}" -> predicted={predicted_label}, true={true_label}')
+        mark = "ok  " if is_correct else "MISS"
+        print(f'{mark} "{text}" -> predicted={predicted_label}, true={true_label}')
+        print(f"       {analyzer.explain(text)}")
 
     if total == 0:
         print("\nNo labeled examples to evaluate.")
@@ -52,9 +50,6 @@ def run_batch_demo() -> None:
     print("\n=== Batch Demo on SAMPLE_POSTS (rule based) ===")
     for text in SAMPLE_POSTS:
         label = analyzer.predict_label(text)
-        # If explain() is implemented, show a short explanation.
-        # reason = analyzer.explain(text)
-        # print(f'"{text}" -> {label} ({reason})')
         print(f'"{text}" -> {label}')
 
 
@@ -76,10 +71,7 @@ def run_interactive_loop() -> None:
             break
 
         label = analyzer.predict_label(user_input)
-        # If explain() is implemented, you can include an explanation:
-        # reason = analyzer.explain(user_input)
-        # print(f"Model: {label} ({reason})")
-        print(f"Model: {label}")
+        print(f"Model: {label} ({analyzer.explain(user_input)})")
 
 
 if __name__ == "__main__":
